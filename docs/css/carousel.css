@@ -1,0 +1,39 @@
+/* @import url(https://fonts.googleapis.com/css?family=Amatic+SC); */
+@keyframes DrawTextPath {
+  0% {
+    stroke-dasharray: 0 360;
+  }
+  100% {
+    stroke-dasharray: 100% 100%;
+  }
+}
+.main-view-container {
+  background-color: #f6f6f656;
+  width: 100%;
+  height: 40vh;
+}
+
+.scene {
+  width: 100%;
+  height: 100%;
+}
+
+.text-container {
+  width: 50%;
+}
+
+.row-ca {
+  fill: none;
+  stroke: white;
+  stroke-miterlimit: 10;
+  font-family: "MoonFlower", "Amatic SC", cursive;
+  font-size: 13em;
+  stroke-width: .0225em;
+}
+.row-ca.drawing {
+  animation: DrawTextPath 4.1s cubic-bezier(0.59, 0.03, 0.27, 0.89);
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: 0.3s;
+}

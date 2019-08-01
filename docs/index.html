@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Gas Exchange</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/carousel.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Application -->
+  <link href="css/app.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container">
+      <div class="col-md-12" id="article-list">
+          <div class="row">
+            <div class="col-lg-12">
+              <p id="account" class="welcome pull-right" style="color: white"></p>
+              <p id="accountBalance" class="welcome pull-left" style="color: white"></p>
+            </div>
+          </div><br/>
+    <!-- <div class="jumbotron text-center" style="box-shadow: 5px 10px 5px #666666;"> -->
+      <div class="main-view-container" style="box-shadow: 2.5px 5px 20.5px 5px rgb(250, 252, 250);">
+          <svg class="scene" 
+              version="1.1" 
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <svg class="text-container" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1118.9 577.5">
+                <text id="text-content" transform="translate(108.549 223.644)">
+                  <tspan class="row-ca row-1" x="0" y="0">Gas</tspan>
+                  <tspan class="row-ca row-2" x="0" y="120">Exchange</tspan>
+                </text>
+              </svg>
+          </svg>
+      <!-- </div> -->
+    </div>
+    <br/><br/>
+    
+
+    
+
+      <div class="panel-heading clearfix">
+          <div class="panel-title">
+            <button class="btn btn-success btn-lg pull-right" data-toggle="modal" data-target="#sellArticle">Click for sell <span class="glyphicon glyphicon-tags"></span></button>
+          </div>
+        </div>
+        <br/>
+      <!-- <div class="row panel panel-default"> -->
+        <div class="panel-heading clearfix">
+          <div class="panel-title">
+            <button class="btn btn-info btn-lg pull-left" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Events&nbsp;<span class="glyphicon glyphicon-hand-down"></span></button>
+          </div>
+        </div>
+        <ul id="events" class="collapse list-group"></ul>
+      <!-- </div> -->
+
+      <div id="articlesRow" class="row">
+        <!-- ARTICLES LOAD HERE -->
+      </div>
+    </div>
+  </div>
+
+
+  <div id="articleTemplate" style="display: none;">
+    <div class="row-lg-12">
+      <div class="panel panel-default panel-article" >
+        <div class="panel-heading">
+          <h3 class="panel-title"></h3>
+        </div>
+        <div class="panel-body">
+          <strong><span class="glyphicon glyphicon-file"></span>&nbsp;Description</strong>: <span class="article-description"></span><br/>
+          <strong><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Price (ETH)</strong>: <span class="article-price"></span><br/>
+          <strong><span class="glyphicon glyphicon-bitcoin"></span>&nbsp;Sold by</strong>: <span class="article-seller"></span><br/>
+          <strong><span class="glyphicon glyphicon-bitcoin"></span>&nbsp;Bought by</strong>: <span class="article-buyer"></span><br/>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-primary btn-success btn-buy" onclick="App.buyArticle(); return false;">Buy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal form to sell an article -->
+  <div class="modal fade" id="sellArticle" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sell your article&nbsp;<span class="glyphicon glyphicon-pencil"></span></h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <form>
+                <div class="form-group">
+                  <label for="article_name">Article name&nbsp;<span class="glyphicon glyphicon-file"></span></label>
+                  <input type="text" class="form-control" id="article_name" placeholder="Enter the name of your article">
+                </div>
+                <div class="form-group">
+                  <label for="price">Price in ETH&nbsp;<span class="glyphicon glyphicon-tags"></span></label>
+                  <input type="number" class="form-control" id="article_price" placeholder="1" pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
+                </div>
+                <div class="form-group">
+                  <label for="description">Description&nbsp;<span class="glyphicon glyphicon-bitcoin"></span></label>
+                  <textarea type="text" class="form-control vresize" id="article_description" placeholder="Describe your article" maxlength="255"></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-success" data-dismiss="modal" onclick="App.sellArticle(); return false;">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+
+  <script>
+    var demo = (function (window) {
+    'use strict';
+    var SELECTORS = {
+            textRows: '.row-ca'
+        },
+        CLASSES = {
+            drawingWord: 'drawing'
+        },
+        textRows = document.querySelectorAll(SELECTORS.textRows);
+    function applyDrawEffect (rowSVG) {        
+      rowSVG.classList.add(CLASSES.drawingWord);            
+    }
+    function drawWords () {        
+        [].forEach.call(textRows, applyDrawEffect);        
+    }
+    function init () {
+        drawWords();    
+    }
+    return {
+        init: init
+    };
+    
+}(window));
+
+
+
+
+window.addEventListener('DOMContentLoaded', demo.init, false);
+  </script>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
